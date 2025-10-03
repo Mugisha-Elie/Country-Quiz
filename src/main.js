@@ -1,4 +1,4 @@
-const questionDisplay = document.getElementById("questions");
+const questionDisplay = document.getElementById("question");
 const questions = [
     {
         question:"What is the flag of Japan?",
@@ -52,8 +52,81 @@ const questions = [
 
     }];
 
+    const images = [0, 4, 6, 7, 9]
 
-const doneQuestions = [];
+
+let currentQuestionIndex = 2;
+
+function generateQuestion(){
+    if(currentQuestionIndex > questions.length-1){
+        currentQuestionIndex = 0; // For now
+    }
+
+    if(images.includes(currentQuestionIndex)){
+
+        let h2 = document.createElement("h2");
+        h2.textContent = questions[currentQuestionIndex].question;
+        h2.classList.add("font-bold", "text-4xl");
+        questionDisplay.appendChild(h2);
+
+        let container = document.createElement("div");
+        container.classList.add("grid", "grid-cols-1", "md:grid-cols-2", "gap-x-8", "gap-y-5", "mt-5");
+        questions[currentQuestionIndex].options.forEach((option, index) => {
+            let div = document.createElement("div");
+            let img = document.createElement("img");
+            img.setAttribute("src", option);
+            img.classList.add("size-5")
+            div.appendChild(img);
+
+            div.classList.add("bg-gray-700/50", "px-10", "py-3", "rounded", "text-center", "font-bold", "hover:scale-110", "transition-all", "duration-300", "cursor-pointer");
+            div.dataset.id = index;
+            div.addEventListener("click", (event)=>{
+                if(Number(div.dataset.id) === questions[currentQuestionIndex].answer){
+                    alert("Correct Answer")
+                }else{
+                    alert("Wrong Answer");
+                }
+            });
+            container.appendChild(div);
+        });
+
+        questionDisplay.appendChild(container);
+
+    }else{
+        let h2 = document.createElement("h2");
+        h2.textContent = questions[currentQuestionIndex].question;
+        h2.classList.add("font-bold", "text-4xl");
+        questionDisplay.appendChild(h2);
+
+        let container = document.createElement("div");
+        container.classList.add("grid", "grid-cols-1", "md:grid-cols-2", "gap-x-8", "gap-y-5", "mt-5");
+        questions[currentQuestionIndex].options.forEach((option, index) => {
+            let div = document.createElement("div");
+            let h2 = document.createElement("h2");
+            h2.textContent = option;
+            h2.classList.add("font-bold", "text-sm")
+            div.appendChild(h2);
+
+            div.classList.add("bg-gray-700/50", "px-10", "py-3", "rounded", "text-center", "font-bold", "hover:scale-110", "transition-all", "duration-300", "cursor-pointer");
+            div.dataset.id = index;
+            div.addEventListener("click", (event)=>{
+                if(Number(div.dataset.id) === questions[currentQuestionIndex].answer){
+                    alert("Correct Answer")
+                }else{
+                    alert("Wrong Answer");
+                }
+            });
+            container.appendChild(div);
+        });
+
+        questionDisplay.appendChild(container);
+    }
+    
+    
+}
+generateQuestion();
+
+
 
 
 
