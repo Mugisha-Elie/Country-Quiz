@@ -54,12 +54,20 @@ const questions = [
 
     const images = [0, 4, 6, 7, 9]
 
+    window.addEventListener("DOMContentLoaded", generateQuestion);
 
-let currentQuestionIndex = 2;
+
+let currentQuestionIndex = 4;
+let score = 0;
 
 function generateQuestion(){
+    questionDisplay.innerHTML = "";
     if(currentQuestionIndex > questions.length-1){
-        currentQuestionIndex = 0; // For now
+        let h2 = document.createElement("h2");
+        h2.textContent = `Your Score: ${score} out of ${questions.length}`;
+        h2.classList.add("font-bold", "text-4xl");
+        questionDisplay.appendChild(h2);
+        return;
     }
 
     if(images.includes(currentQuestionIndex)){
@@ -81,13 +89,19 @@ function generateQuestion(){
             div.classList.add("bg-gray-700/50", "px-10", "py-3", "rounded", "text-center", "font-bold", "hover:scale-110", "transition-all", "duration-300", "cursor-pointer");
             div.dataset.id = index;
             div.addEventListener("click", (event)=>{
-                if(Number(div.dataset.id) === questions[currentQuestionIndex].answer){
-                    alert("Correct Answer")
+                if(div.dataset.id == questions[currentQuestionIndex].answer){
+                    // document.get
+                    currentQuestionIndex++;
+                    generateQuestion();
+                    score++;
                 }else{
                     alert("Wrong Answer");
+                    currentQuestionIndex++;
+                    generateQuestion();
                 }
             });
             container.appendChild(div);
+        
         });
 
         questionDisplay.appendChild(container);
@@ -109,11 +123,16 @@ function generateQuestion(){
 
             div.classList.add("bg-gray-700/50", "px-10", "py-3", "rounded", "text-center", "font-bold", "hover:scale-110", "transition-all", "duration-300", "cursor-pointer");
             div.dataset.id = index;
-            div.addEventListener("click", (event)=>{
+            div.addEventListener("click", ()=>{
                 if(Number(div.dataset.id) === questions[currentQuestionIndex].answer){
-                    alert("Correct Answer")
+                    alert("Correct Answer");
+                    currentQuestionIndex++;
+                    generateQuestion();
+                    score++;
                 }else{
                     alert("Wrong Answer");
+                    currentQuestionIndex++;
+                    generateQuestion();
                 }
             });
             container.appendChild(div);
@@ -124,7 +143,17 @@ function generateQuestion(){
     
     
 }
-generateQuestion();
+
+function moveToNext(){
+    if(currentQuestionIndex < questions.length){
+        currentQuestionIndex++;
+    }
+    generateQuestion();
+}
+
+
+
+
 
 
 
